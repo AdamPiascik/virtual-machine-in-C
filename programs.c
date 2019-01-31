@@ -1,8 +1,5 @@
 #include "myVM.h"
 
-/*
-This is a test program consisting of five instructions
-*/
 const int program1[] = {
     PSH, 9,
     PSH, 5,
@@ -12,9 +9,9 @@ const int program1[] = {
 };
 
 const int program2[] = {
-    PSH, 9,
+    PSH, 10,
     PSH, 5,
-    SUB,
+    DIV,
     POP,
     HLT
 };
@@ -26,13 +23,3 @@ const int program3[] = {
     POP,
     HLT
 };
-
-int isValid (int *program)
-{
-    if (program != (int *) 0){
-        return 1;
-    }
-    else{
-        return 0;
-    }
-}
