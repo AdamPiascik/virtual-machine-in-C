@@ -1,9 +1,3 @@
 change to input programs from a text file
-add MULT instruction
-add MOD instruction
-add NEG instruction
-add DIV instruction
 add type checking for ADD, SUB, MULT, MOD, NEG, DIV
-
-document myVM.c
-document instruction_set.c
+Add another CPU
