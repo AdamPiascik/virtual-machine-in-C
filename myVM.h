@@ -3,13 +3,10 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define sp (registers[SP])
-#define ip (registers[IP])
-
-//  Function declarations.
-int * fetch (char *program);
-void execute (int *instr);
-int isValid (int *program);
+//  Function declarations from "VM_funcs.c"
+void fetch (char* from, int instr);
+void execute (void);
+void loadProgram (char *requested_program);
 
 /*  Define the VM instruction set. These are the basic operations that
     the "CPU" can perform. */
@@ -26,11 +23,12 @@ typedef enum {
 } InstructionSet;
 
 /*  Define the CPU registers:
-        R1-R8: general purpose registers for storing values loaded from
+        R0-R4: general purpose registers for storing values loaded from
         the stack.
-        IP: Keeps track of which porgram instruction is being executed.
-        SP: Keeps track of which memory block is at the top of the stack. */
+        INS: Keeps track of which program instruction is being executed.
+        STK: Keeps track of which memory block is at the top of the stack.
+        REG: Keeps track of the next currently available register. */
 typedef enum {
-   R1, R2, R3, R4, R5, R6, R7, R8,
-   IP, SP, NUM_OF_REGISTERS
+   R0, R1, R2, R3, R4, INS, STK, REG, 
+   NUM_OF_REGISTERS
 } Registers;

@@ -1,12 +1,17 @@
 #include "myVM.h"
 
-extern int stack[];
-extern int registers[];
+// load externally declared variables
+// from "VM_funcs.c"
+extern int registers[], registers[REG];
+// from "myVM.c"
 extern bool running;
+extern int stack[];
 
-void execute (int *instr)
+/*  This function executes whichever instruction has been loaded into
+    register R0, via a switch statement. */
+void execute (void)
 {
-    switch (*instr) {
+    switch (registers[R0]){
         case HLT:
         {
             running = false;
@@ -14,69 +19,67 @@ void execute (int *instr)
         }
         case PSH:
         {
-            sp++;
-            stack[sp] = *(++instr);
-            ++ip;
+            stack[registers[STK]] = registers[R1];
+            ++registers[STK];
             break;
         }
         case POP:
         {
-            printf("Popping the result of the program...\n");
-            int val_popped = stack[sp--];
+            int val_popped = stack[--registers[STK]];
             printf("Popped %d!\n", val_popped);
             break;
         }
         case ADD:
         {
-            int a = stack[sp--];
-            int b = stack[sp--];
-            int result = b + a;
-            sp++;
-            stack[sp] = result;
+            fetch("stack", stack[--registers[STK]]);
+            fetch("stack", stack[--registers[STK]]);
+            registers[registers[REG] -= 2] = registers[registers[REG] + 1] + registers[registers[REG]];
+            stack[registers[STK]] = registers[registers[REG]];
+            ++registers[STK];
             break;
         }
         case SUB:
         {
-            int a = stack[sp--];
-            int b = stack[sp--];
-            int result = b - a;
-            sp++;
-            stack[sp] = result;
+            fetch("stack", stack[--registers[STK]]);
+            fetch("stack", stack[--registers[STK]]);
+            registers[registers[REG] -= 2] = registers[registers[REG] + 1] - registers[registers[REG]];
+            stack[registers[STK]] = registers[registers[REG]];
+            ++registers[STK];
             break;
         }
         case MOD:
         {
-            int a = stack[sp--];
-            int b = stack[sp--];
-            int result = b % a;
-            sp++;
-            stack[sp] = result;
+            fetch("stack", stack[--registers[STK]]);
+            fetch("stack", stack[--registers[STK]]);
+            registers[registers[REG] -= 2] = registers[registers[REG] + 1] % registers[registers[REG]];
+            stack[registers[STK]] = registers[registers[REG]];
+            ++registers[STK];
             break;
         }
         case DIV:
         {
-            int a = stack[sp--];
-            int b = stack[sp--];
-            int result = b / a;
-            sp++;
-            stack[sp] = result;
+            fetch("stack", stack[--registers[STK]]);
+            fetch("stack", stack[--registers[STK]]);
+            registers[registers[REG] -= 2] = registers[registers[REG] + 1] / registers[registers[REG]];
+            stack[registers[STK]] = registers[registers[REG]];
+            ++registers[STK];
             break;
         }
         case MULT:
         {
-            int a = stack[sp--];
-            int b = stack[sp--];
-            int result = b * a;
-            sp++;
-            stack[sp] = result;
+            fetch("stack", stack[--registers[STK]]);
+            fetch("stack", stack[--registers[STK]]);
+            registers[registers[REG] -= 2] = registers[registers[REG] + 1] * registers[registers[REG]];
+            stack[registers[STK]] = registers[registers[REG]];
+            ++registers[STK];
             break;
         }
         case NEG:
         {
-            int a = stack[sp--];
-            int result = -a;
-            sp++;
-            stack[sp] = result;
+            fetch("stack", stack[--registers[STK]]);
+            registers[registers[REG] -= 1] = -registers[registers[REG]];
+            stack[registers[STK]] = registers[registers[REG]];
+            ++registers[STK];
             break;
         }
         default:

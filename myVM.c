@@ -1,6 +1,9 @@
 /*  This program implements a virtual machine to run programs stored as arrays
-    in "programs.c". The desired program is selected by choosing passing it to
-    the program in the command line; programs execute line by line.*/
+    in "programs.c". The desired program is selected by loading it into the
+    start of the stack; these blocks are essentially read-only for the rest of
+    the program, and only blocks from (last instruction + 1) upwards are
+    written to. Instructions are loaded sequentially into R0 where they are executed
+    and the result pushed to the top of the stack. */
 
 #include "myVM.h"
 
@@ -11,30 +14,18 @@ int stack[256];
 int registers[NUM_OF_REGISTERS];
 //  Define a program status variable
 bool running;
-//  Declare a pointer to the current instruction of the requested program
-int *curr_instr;
 
 int main (int argc, char *argv[])
 {
-    printf("\n"); // Some formatting
-    //  Check whether only one program was requested
     if (argc == 2){
         running = true; // Set the program status to running
-        //  Execute the program
-        while (running) {
-            /*  Fetch the instruction at array position [ip] in the
-                requested program. ip is initially set to 0. */
-            curr_instr = fetch(argv[1]);
-            //  Check whether the instruction is valid
-            if (isValid(curr_instr)){
-                //  Execute the instruction
-                execute(curr_instr);
-                //  Move on to the next instruction
-                ++ip;
-            }
-            else{
-                break;
-            }
+        loadProgram(argv[1]); // Loads the requested program
+        /*  While the program is running, instructions are loaded from the stack
+            into the registers, executed, and the next instruction loaded. */
+        while (running){
+            fetch("instructions", stack[registers[INS]]);
+            execute();
+            ++registers[INS];
         }
     }
     //  Error message for invalid program request
