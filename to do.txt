@@ -1,3 +1,7 @@
-change to input programs from a text file
 add type checking for ADD, SUB, MULT, MOD, NEG, DIV
 Add another CPU
+Add clear registers function
+Add view register contents function
+
+Document instruction_set.c
+Check all documentation
