@@ -23,9 +23,9 @@ int main (int argc, char *argv[])
         /*  While the program is running, instructions are loaded from the stack
             into the registers, executed, and the next instruction loaded. */
         while (running){
-            fetch("instructions", stack[registers[INS]]);
+            fetch("instructions", stack[CURR_INSTRUCTION]);
             execute();
-            ++registers[INS];
+            ++CURR_INSTRUCTION;
         }
     }
     //  Error message for invalid program request

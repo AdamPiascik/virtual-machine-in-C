@@ -8,6 +8,10 @@ void fetch (char* from, int instr);
 void execute (void);
 void loadProgram (char *requested_program);
 
+#define CURR_STACK_TOP registers[STK]
+#define CURR_INSTRUCTION registers[INS]
+#define CURR_REGISTER registers[REG]
+
 /*  Define the VM instruction set. These are the basic operations that
     the "CPU" can perform. */
 typedef enum {

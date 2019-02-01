@@ -2,7 +2,7 @@
 
 // load externally declared variables
 // from "VM_funcs.c"
-extern int registers[], registers[REG];
+extern int registers[], CURR_REGISTER;
 // from "myVM.c"
 extern bool running;
 extern int stack[];
@@ -19,67 +19,67 @@ void execute (void)
         }
         case PSH:
         {
-            stack[registers[STK]] = registers[R1];
-            ++registers[STK];
+            stack[CURR_STACK_TOP] = registers[R1];
+            ++CURR_STACK_TOP;
             break;
         }
         case POP:
         {
-            int val_popped = stack[--registers[STK]];
+            int val_popped = stack[--CURR_STACK_TOP];
             printf("Popped %d!\n", val_popped);
             break;
         }
         case ADD:
         {
-            fetch("stack", stack[--registers[STK]]);
-            fetch("stack", stack[--registers[STK]]);
-            registers[registers[REG] -= 2] = registers[registers[REG] + 1] + registers[registers[REG]];
-            stack[registers[STK]] = registers[registers[REG]];
-            ++registers[STK];
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            registers[CURR_REGISTER -= 2] = registers[CURR_REGISTER + 1] + registers[CURR_REGISTER];
+            stack[CURR_STACK_TOP] = registers[CURR_REGISTER];
+            ++CURR_STACK_TOP;
             break;
         }
         case SUB:
         {
-            fetch("stack", stack[--registers[STK]]);
-            fetch("stack", stack[--registers[STK]]);
-            registers[registers[REG] -= 2] = registers[registers[REG] + 1] - registers[registers[REG]];
-            stack[registers[STK]] = registers[registers[REG]];
-            ++registers[STK];
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            registers[CURR_REGISTER -= 2] = registers[CURR_REGISTER + 1] - registers[CURR_REGISTER];
+            stack[CURR_STACK_TOP] = registers[CURR_REGISTER];
+            ++CURR_STACK_TOP;
             break;
         }
         case MOD:
         {
-            fetch("stack", stack[--registers[STK]]);
-            fetch("stack", stack[--registers[STK]]);
-            registers[registers[REG] -= 2] = registers[registers[REG] + 1] % registers[registers[REG]];
-            stack[registers[STK]] = registers[registers[REG]];
-            ++registers[STK];
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            registers[CURR_REGISTER -= 2] = registers[CURR_REGISTER + 1] % registers[CURR_REGISTER];
+            stack[CURR_STACK_TOP] = registers[CURR_REGISTER];
+            ++CURR_STACK_TOP;
             break;
         }
         case DIV:
         {
-            fetch("stack", stack[--registers[STK]]);
-            fetch("stack", stack[--registers[STK]]);
-            registers[registers[REG] -= 2] = registers[registers[REG] + 1] / registers[registers[REG]];
-            stack[registers[STK]] = registers[registers[REG]];
-            ++registers[STK];
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            registers[CURR_REGISTER -= 2] = registers[CURR_REGISTER + 1] / registers[CURR_REGISTER];
+            stack[CURR_STACK_TOP] = registers[CURR_REGISTER];
+            ++CURR_STACK_TOP;
             break;
         }
         case MULT:
         {
-            fetch("stack", stack[--registers[STK]]);
-            fetch("stack", stack[--registers[STK]]);
-            registers[registers[REG] -= 2] = registers[registers[REG] + 1] * registers[registers[REG]];
-            stack[registers[STK]] = registers[registers[REG]];
-            ++registers[STK];
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            registers[CURR_REGISTER -= 2] = registers[CURR_REGISTER + 1] * registers[CURR_REGISTER];
+            stack[CURR_STACK_TOP] = registers[CURR_REGISTER];
+            ++CURR_STACK_TOP;
             break;
         }
         case NEG:
         {
-            fetch("stack", stack[--registers[STK]]);
-            registers[registers[REG] -= 1] = -registers[registers[REG]];
-            stack[registers[STK]] = registers[registers[REG]];
-            ++registers[STK];
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            registers[CURR_REGISTER -= 1] = -registers[CURR_REGISTER];
+            stack[CURR_STACK_TOP] = registers[CURR_REGISTER];
+            ++CURR_STACK_TOP;
             break;
         }
         default:
