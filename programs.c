@@ -3,6 +3,8 @@
 /*  These are some test programs, which will eventually be moved
     into separate text files. */
 
+// UPDATE - programs are now inputted as text files, not from here!
+
 const int program1[] = {
     PSH, 10,
     PSH, 2,
