@@ -1,0 +1,7 @@
+PSH,
+10,
+PSH,
+5,
+ADD,
+POP,
+HLT
