@@ -85,6 +85,7 @@ void execute (void)
         default:
         {
             printf("An invalid instruction was requested.\n");
+            running = false;
             break;
         }
     }
