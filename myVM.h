@@ -2,11 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 //  Function declarations from "VM_funcs.c"
 void fetch (char* from, int instr);
 void execute (void);
 void loadProgram (char *requested_program);
+void loadFileProgram (char *requested_program);
+int makeInstruction(char *program_line);
 
 #define CURR_STACK_TOP registers[STK]
 #define CURR_INSTRUCTION registers[INS]

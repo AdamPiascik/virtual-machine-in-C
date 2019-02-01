@@ -19,7 +19,7 @@ int main (int argc, char *argv[])
 {
     if (argc == 2){
         running = true; // Set the program status to running
-        loadProgram(argv[1]); // Loads the requested program
+        loadFileProgram(argv[1]); // Loads the requested program from file
         /*  While the program is running, instructions are loaded from the stack
             into the registers, executed, and the next instruction loaded. */
         while (running){

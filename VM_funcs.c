@@ -2,48 +2,13 @@
 
 // load externally declared variables
 // from "programs.c"
-extern int program1[], program2[], program3[]; 
-extern size_t program1_length, program2_length, program3_length;
+// extern int program1[], program2[], program3[]; 
+// extern size_t program1_length, program2_length, program3_length;
  // from "myVM.c"
 extern int stack[];
 
 //  Define an array of CPU registers, each of 32 bit size
 extern int registers[];
-// Declare a simple loop variable;
-int i;
-
-/*  This function loads programs into the start of the stack by checking
-    which program array to take from "programs.c" and copying instructions
-    using a for loop. The instruction counter (CURR_INSTRUCTION) is then set to
-    the first instruction at the start of the stack, and the stack counter
-    (CURR_STACK_TOP) is set to the block just beyond the last instruction. */
-void loadProgram (char *requested_program)
-{
-    if (strcmp(requested_program, "program1") == 0){
-        for (i = 0; i < program1_length; ++i){
-            stack[i] = program1[i];
-            CURR_INSTRUCTION = 0;
-            CURR_STACK_TOP = program1_length;
-        }
-    }
-    else if (strcmp(requested_program, "program2") == 0){
-        for (i = 0; i < program2_length; ++i){
-            stack[i] = program2[i];
-            CURR_INSTRUCTION = 0;
-            CURR_STACK_TOP = program2_length;
-        }
-    }
-    else if (strcmp(requested_program, "program3") == 0){
-        for (i = 0; i < program3_length; ++i){
-            stack[i] = program3[i];
-            CURR_INSTRUCTION = 0;
-            CURR_STACK_TOP = program3_length;
-        }
-    }
-    else{
-        printf("The requested program isn't valid..\n");
-    }
-}
 
 /*  This function moves data from the stack to the registers. If called with
     "instructions" as the "from" argument, it fetches data from the instruction
@@ -69,5 +34,48 @@ void fetch (char* from, int instr)
     else if (strcmp(from, "stack") == 0){
         registers[CURR_REGISTER] = instr;
         ++CURR_REGISTER;
+    }
+}
+
+void loadFileProgram (char *requested_program)
+{
+    char full_path[3] = ".\\", suffix[5] = ".txt";
+    strncat(requested_program, suffix, 4);
+    strncat(full_path, requested_program, strlen(requested_program));
+    FILE *program_file = fopen(full_path, "r");
+    char line[16];
+    int i = 0;
+
+    while (fgets(line, sizeof(line), program_file)){
+        if (isalpha(line[0])){
+            stack[i] = makeInstruction(line); 
+        }
+        else{
+            stack[i] = atoi(line);
+        }        
+        ++i;
+    }
+
+    fclose(program_file);
+    CURR_INSTRUCTION = 0;
+    CURR_STACK_TOP = i;   
+}
+
+int makeInstruction(char *program_line)
+{
+    if (strcmp(program_line, "PSH,\n") == 0){
+        return PSH;
+    }
+    else if (!strcmp(program_line, "POP,\n")){
+        return POP;
+    }
+    else if (!strcmp(program_line, "ADD,\n")){
+        return ADD;
+    }
+    else if (!strcmp(program_line, "HLT")){
+        return HLT;
+    }
+    else{
+        return -1;
     }
 }
