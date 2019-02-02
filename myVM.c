@@ -9,9 +9,9 @@
 
 /*  Define a memory stack of 256 blocks, each of 4 byte size (total
     stack size is 1 kilobyte) */
-int stack[256];
+int stack[256] = {0};
 //  Define an array of CPU registers, each of 32 bit size
-int registers[NUM_OF_REGISTERS];
+int registers[NUM_OF_REGISTERS] = {0};
 //  Define a program status variable
 bool running;
 
@@ -27,6 +27,7 @@ int main (int argc, char *argv[])
             execute();
             ++CURR_INSTRUCTION;
         }
+        clearRegisters(); // Clear the CPU registers after program completion
     }
     //  Error message for invalid program request
     else{
