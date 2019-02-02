@@ -4,12 +4,16 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-//  Function declarations from "VM_funcs.c"
+//  Function declarations from "VMfunctions.c"
 void fetch (char* from, int instr);
-void execute (void);
-void loadProgram (char *requested_program);
 void loadFileProgram (char *requested_program);
+void viewRegisters (void);
+void clearRegisters (void);
+//  Function declaration from "makeInstruction.c"
 int makeInstruction(char *program_line);
+//  Function declaration from "instructionSet.c"
+void execute (void);
+
 
 #define CURR_STACK_TOP registers[STK]
 #define CURR_INSTRUCTION registers[INS]
