@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 #include <ctype.h>
 
 //  Function declarations from "VMfunctions.c"
@@ -30,6 +31,7 @@ typedef enum {
     MOD,
     NEG,
     SUB,
+    SQRT,
     HLT
 } InstructionSet;
 

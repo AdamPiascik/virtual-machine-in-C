@@ -82,6 +82,14 @@ void execute (void)
             ++CURR_STACK_TOP;
             break;
         }
+        case SQRT:
+        {
+            fetch("stack", stack[--CURR_STACK_TOP]);
+            registers[CURR_REGISTER -= 1] = sqrt(registers[CURR_REGISTER]);
+            stack[CURR_STACK_TOP] = registers[CURR_REGISTER];
+            ++CURR_STACK_TOP;
+            break;
+        }
         default:
         {
             printf("An invalid instruction was requested.\n");

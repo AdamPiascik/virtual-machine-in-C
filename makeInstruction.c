@@ -26,6 +26,9 @@ int makeInstruction(char *program_line)
     else if (!strcmp(program_line, "NEG,\n")){
         return NEG;
     }
+    else if (!strcmp(program_line, "SQRT,\n")){
+        return SQRT;
+    }
     else if (!strcmp(program_line, "HLT")){
         return HLT;
     }
