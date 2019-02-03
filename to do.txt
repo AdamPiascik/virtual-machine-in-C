@@ -1,4 +1,8 @@
 add type checking for ADD, SUB, MULT, MOD, NEG, DIV
+implemenent logical testing (greater than, less than, equals to)
+build discriminant checker program
+change printout from POP
 
 Document instruction_set.c
 Check all documentation
+Write readme.md
