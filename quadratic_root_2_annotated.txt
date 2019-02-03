@@ -1,0 +1,31 @@
+// This is an annotated version of the quadratic solver program
+// Assuming an equation of the form ax^2 + bx + c = 0
+
+PSH,
+5,		// Push b to the stack
+PSH,
+5,		// Push b to the stack
+MULT,		// Calculate b^2 and psuh to stack
+PSH,
+4,		// Push 4 to the stack
+PSH,
+2,		// Push a to the stack
+PSH,
+-3,		// Push c to the stack
+MULT,		// Calculate 4ac in two lines
+MULT,
+SUB,		// Calculate discriminant
+SQRT,		// Square root discriminant
+PSH,
+5,		// Push b to the stack
+NEG,		// Calculate -b
+SUB,		// Calculate discriminant - (-b)
+NEG,		// Calculate -b - discriminant
+PSH,		
+2,		// Push 2 to the stack
+PSH,
+2,		// Push a to the stack
+MULT,		// Calculate 2a
+DIV,		// Calculate (-b - discriminant) / 2a
+POP,		// Get the root!
+HLT		// Stop the program
